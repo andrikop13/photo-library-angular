@@ -1,0 +1,28 @@
+/**************************/
+/* NAVIGATION */
+/**************************/
+.header {
+  height: 100px;
+  border: 2px solid grey;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-nav {
+  & .main-nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8.6rem;
+  }
+}
+
+.main-nav-link {
+  background-color: black;
+}
+
+.custom-button {
+  padding: 0.5rem 7rem;
+}

@@ -1,0 +1,25 @@
+<header class="header">
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <button
+        mat-stroked-button
+        class="custom-button"
+        color="primary"
+        routerLink="/"
+        routerLinkActive="mat-flat-button"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Photos
+      </button>
+      <button
+        mat-stroked-button
+        class="custom-button"
+        color="accent"
+        routerLink="/favorites"
+        routerLinkActive="mat-flat-button"
+      >
+        Favorites
+      </button>
+    </ul>
+  </nav>
+</header>
