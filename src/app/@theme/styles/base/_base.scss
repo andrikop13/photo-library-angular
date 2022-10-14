@@ -25,24 +25,14 @@ html {
 html {
   width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--dark-slate) var(--navy);
 }
-// ::-webkit-scrollbar {
-//   width: 7px;
-// }
-// ::-webkit-scrollbar-track {
-//   // background: var(--navy);
-// }
-
-// ::-webkit-scrollbar-thumb {
-//   background-color: var(--dark-slate);
-//   border-radius: 5px;
-// }
 
 html,
 body {
-  height: 100%;
+  height: 94vh;
 }
 body {
   margin: 5px;

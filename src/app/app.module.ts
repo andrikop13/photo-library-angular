@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './@theme/components/header/header.component';
 import { MainLibraryModule } from './main-library/main-library.module';
-import { SharedModuleModule } from './shared-module/shared-module.module';
+import { SharedModuleModule } from './shared/shared.module';
 import { FavoritesModule } from './favorites/favorites.module';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -19,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     MainLibraryModule,
     SharedModuleModule,
     FavoritesModule,
+    MainLibraryModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
