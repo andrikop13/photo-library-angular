@@ -20,6 +20,8 @@ export class PhotosResolver implements Resolve<boolean> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.photoStore.getPhotos();
+    return !this.photoStore.getClone().length
+      ? this.photoStore.loadPhotos()
+      : of([]);
   }
 }

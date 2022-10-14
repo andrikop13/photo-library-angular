@@ -7,4 +7,5 @@ export interface Photo {
   author: string;
   author_url: string;
   post_url: string;
+  favorite?: boolean;
 }

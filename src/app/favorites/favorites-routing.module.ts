@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FavoritesListComponent } from './favorites-list/favorites-list.component';
-import { SinglePhotoComponent } from './single-photo/single-photo.component';
+import { PhotoInfoComponent } from './photo-info/photo-info.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'photos/:id',
-    component: SinglePhotoComponent,
+    component: PhotoInfoComponent,
   },
 ];
 
