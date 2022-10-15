@@ -5,10 +5,7 @@ import { fadeAnimation } from './@theme/animations';
   selector: 'app-root',
   template: `
     <app-header></app-header>
-    <main
-      role="main"
-      [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''"
-    >
+    <main role="main" [@fadeAnimation]>
       <div class="main-body">
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
@@ -22,7 +19,6 @@ import { fadeAnimation } from './@theme/animations';
         display: flex;
         justify-content: center;
         max-height: 75vh;
-
         overflow-y: scroll;
       }
     `,

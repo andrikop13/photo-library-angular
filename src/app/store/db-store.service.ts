@@ -9,10 +9,12 @@ import { Photo } from '../shared/models/photo';
 export class DbStoreService {
   PICSUM_URL: string = 'https://picsum.photos/list';
   private filterPhotosNum: number = 100;
-  totalPhotos: number = this.filterPhotosNum;
+  private limit: number = 10;
 
   private fillDB = new BehaviorSubject<Photo[]>([]);
   private EmulatePhotosDB$: Observable<Photo[]> = this.fillDB.asObservable();
+
+  totalPhotos: number = this.filterPhotosNum;
 
   constructor(private http: HttpClient) {}
 
@@ -26,10 +28,19 @@ export class DbStoreService {
     );
   }
 
-  getRange(lower: number, upper: number) {
+  getRange(page: number, limit = this.limit) {
+    const lower = page * limit;
+    let upper = (page + 1) * limit;
+
+    if (upper > this.totalPhotos - 1) upper = this.totalPhotos;
+
     return this.EmulatePhotosDB$.pipe(
       map((photos) => photos.slice(lower, upper)),
-      delay(500)
+      delay(Math.random() * (500 - 300) + 300)
     );
+  }
+
+  isEmpty() {
+    return !this.fillDB.getValue().slice(0).length;
   }
 }

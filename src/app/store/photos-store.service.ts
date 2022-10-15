@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, delay, find, map, Observable, tap } from 'rxjs';
 import { Photo } from '../shared/models/photo';
 import { DbStoreService } from './db-store.service';
 
@@ -13,25 +13,20 @@ export class PhotosStoreService {
   private state: Observable<Photo[]> = this.saveState as Observable<Photo[]>;
 
   private page: number = 0;
-  private limit: number = 10;
   totalPhotos: number = 0;
 
   constructor(private dbStore: DbStoreService) {
     this.totalPhotos = dbStore.totalPhotos;
   }
 
-  loadNext(page = this.page++, limit = this.limit) {
-    const lower = page * limit;
-    let upper = (page + 1) * limit;
-
-    const totalElements = this.dbStore.totalPhotos;
-    if (upper > totalElements - 1) upper = totalElements;
-
-    return this.dbStore.getRange(lower, upper).pipe(
+  loadNext(page = this.page) {
+    return this.dbStore.getRange(page).pipe(
       tap((d) => {
+        this.page += 1;
         const currentPhotos = this.getClone();
-        this.updatePhotos.next([...currentPhotos, ...d]);
-        this.saveState.next([...currentPhotos, ...d]);
+        this.updatePhotos.next(
+          this.getFavoriteStatus([...currentPhotos, ...d])
+        );
       })
     );
   }
@@ -53,7 +48,20 @@ export class PhotosStoreService {
   updateFavoriteStatus(photo: Photo, status: boolean) {
     const photos = this.getClone();
     const photoIndex = photos.findIndex((p) => p.id == photo.id);
-    photos[photoIndex].favorite = status;
+    photos[photoIndex]['favorite'] = status;
+
+    return photos;
+  }
+
+  getFavoriteStatus(photos: Photo[]) {
+    const favoriteIds = this.saveState
+      .getValue()
+      .slice(0)
+      .map((photos) => photos.id);
+
+    photos.forEach(
+      (photo) => (photo.favorite = favoriteIds.includes(photo.id))
+    );
 
     return photos;
   }
@@ -61,13 +69,13 @@ export class PhotosStoreService {
   addToFavorite(photo: Photo) {
     const updated = this.updateFavoriteStatus(photo, true);
     this.updatePhotos.next(updated);
-    this.saveState.next(updated);
+    this.saveState.next(updated.filter((p) => p.favorite));
   }
 
   removeFromFavorite(photo: Photo) {
-    const updated = this.updateFavoriteStatus(photo, false);
-    this.updatePhotos.next(updated);
-    this.saveState.next(updated);
+    const state = this.saveState.getValue().slice(0);
+    (state.find((el) => el.id === photo.id) as Photo).favorite = false;
+    this.saveState.next(state.filter((p) => p.favorite));
   }
 
   loadPhotos() {

@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppResolver } from './app.resolver';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
-  {
-    path: 'favorites',
-    loadChildren: () =>
-      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
-  },
   {
     path: '',
     loadChildren: () =>
@@ -14,8 +11,15 @@ const routes: Routes = [
         (m) => m.MainLibraryModule
       ),
   },
-
-  { path: '**', redirectTo: 'not-found' },
+  {
+    path: 'favorites',
+    loadChildren: () =>
+      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({

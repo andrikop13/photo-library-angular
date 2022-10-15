@@ -5,10 +5,25 @@ import { Photo } from '../models/photo';
 @Component({
   selector: 'app-single-item',
   templateUrl: './single-item.component.html',
-  styleUrls: ['./single-item.component.scss'],
+  styles: [
+    `
+      .mat-card-actions {
+        padding: 0 !important;
+      }
+
+      .heart {
+        display: inline-block;
+        color: red;
+        font-size: 22px;
+        margin-left: 1rem;
+        padding: 0.4rem;
+      }
+    `,
+  ],
 })
 export class SingleItemComponent implements OnInit {
   @Input('photo') photo!: Photo;
+  @Input('size') size!: number;
   @Output() addFavorite = new EventEmitter<Photo>();
 
   photoUrl: string = '';
@@ -16,7 +31,9 @@ export class SingleItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.photoUrl = `https://picsum.photos/id/${this.photo.id}/250/250.jpg`;
+    const size = this.size || 250;
+    if (!this.photo) return;
+    this.photoUrl = `https://picsum.photos/id/${this.photo.id}/${size}/${size}.jpg`;
   }
 
   addToFavorite(photo: Photo) {

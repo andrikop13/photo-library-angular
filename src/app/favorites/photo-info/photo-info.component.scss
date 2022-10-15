@@ -1,0 +1,25 @@
+.singlePhoto {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3.2rem;
+  -webkit-animation: fadeIn 1s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeIn 1s; /* Firefox < 16 */
+  -ms-animation: fadeIn 1s; /* Internet Explorer */
+  -o-animation: fadeIn 1s; /* Opera < 12.1 */
+  animation: fadeIn 1s;
+}
+
+button {
+  padding: 0.75rem 7rem;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

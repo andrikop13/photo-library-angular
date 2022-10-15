@@ -8,12 +8,14 @@ import { SingleItemComponent } from './single-item/single-item.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnimateListComponent } from './animate-list/animate-list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     InfiniteScrollingComponent,
     SingleItemComponent,
     AnimateListComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { AnimateListComponent } from './animate-list/animate-list.component';
     InfiniteScrollingComponent,
     SingleItemComponent,
     AnimateListComponent,
+    NotFoundComponent,
   ],
 })
 export class SharedModule {}

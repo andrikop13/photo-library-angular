@@ -1,5 +1,13 @@
-<app-animate-list class="library" [library]="favorites$ | async">
-  <ng-container *ngFor="let photo of favorites$ | async">
-    <app-single-item [photo]="photo"></app-single-item>
-  </ng-container>
-</app-animate-list>
+<div style="margin-bottom: 10px">
+  <app-animate-list class="library" [library]="favorites$ | async">
+    <ng-container *ngFor="let photo of favorites$ | async; trackBy: trackByFn">
+      <app-single-item [photo]="photo">
+        <button mat-button (click)="openPhoto(photo)">Open photo</button>
+      </app-single-item>
+    </ng-container>
+
+    <div *ngIf="!(favorites$ | async)?.length" style="margin-top: 7rem">
+      <h1 style="font-weight: 500">There are no favorite photos yet...</h1>
+    </div>
+  </app-animate-list>
+</div>

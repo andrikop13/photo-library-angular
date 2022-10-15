@@ -1,12 +1,5 @@
-import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
+import { animationList } from 'src/app/@theme/animations';
 import { Photo } from '../models/photo';
 
 @Component({
@@ -14,20 +7,7 @@ import { Photo } from '../models/photo';
   template: ` <div [@listAnimation]="library?.length" class="library">
     <ng-content></ng-content>
   </div>`,
-  animations: [
-    trigger('listAnimation', [
-      transition('* => *', [
-        query(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            stagger(100, [animate('0.5s', style({ opacity: 1 }))]),
-          ],
-          { optional: true }
-        ),
-      ]),
-    ]),
-  ],
+  animations: [animationList],
   styles: [
     `
       .library {
@@ -41,7 +21,7 @@ import { Photo } from '../models/photo';
 })
 export class AnimateListComponent implements OnInit {
   @Input()
-  library!: Photo[] | null;
+  library: Photo[] | null = [];
 
   constructor() {}
 
