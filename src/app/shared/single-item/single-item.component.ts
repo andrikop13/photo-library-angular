@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-
+import { CONFIG } from 'src/config';
 import { Photo } from '../models/photo';
 
 @Component({
@@ -33,7 +33,7 @@ export class SingleItemComponent implements OnInit {
   ngOnInit(): void {
     const size = this.size || 250;
     if (!this.photo) return;
-    this.photoUrl = `https://picsum.photos/id/${this.photo.id}/${size}/${size}.jpg`;
+    this.photoUrl = `${CONFIG.singlePhotoUrl}/${this.photo.id}/${size}/${size}.jpg`;
   }
 
   addToFavorite(photo: Photo) {

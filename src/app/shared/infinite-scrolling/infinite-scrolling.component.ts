@@ -34,9 +34,12 @@ import {
 })
 export class InfiniteScrollingComponent implements OnInit, OnDestroy {
   @Input() options = {};
+
   @Input()
   hasMore!: boolean;
+
   @Output() scrolled = new EventEmitter();
+
   @ViewChild('anchor', { static: true })
   anchor!: ElementRef;
 

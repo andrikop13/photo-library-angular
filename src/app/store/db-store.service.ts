@@ -1,25 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, map, Observable, tap } from 'rxjs';
+import { CONFIG } from '../../config';
 import { Photo } from '../shared/models/photo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DbStoreService {
-  PICSUM_URL: string = 'https://picsum.photos/list';
-  private filterPhotosNum: number = 100;
   private limit: number = 10;
 
   private fillDB = new BehaviorSubject<Photo[]>([]);
   private EmulatePhotosDB$: Observable<Photo[]> = this.fillDB.asObservable();
 
-  totalPhotos: number = this.filterPhotosNum;
+  totalPhotos: number = CONFIG.filterPhotosNum;
 
   constructor(private http: HttpClient) {}
 
   load() {
-    return this.http.get<Photo[]>(this.PICSUM_URL).pipe(
+    return this.http.get<Photo[]>(CONFIG.getListOfPhotos).pipe(
       map((photos) =>
         photos.map((p) => {
           return {
@@ -28,9 +27,9 @@ export class DbStoreService {
         })
       ),
       tap((photos: Photo[]) => {
-        const photosLimit = photos.slice(0, this.filterPhotosNum + 1);
+        const photosLimit = photos.slice(0, CONFIG.filterPhotosNum + 1);
         this.fillDB.next(photosLimit);
-        this.totalPhotos = this.filterPhotosNum;
+        this.totalPhotos = CONFIG.filterPhotosNum;
       })
     );
   }
