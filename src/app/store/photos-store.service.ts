@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, find, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Photo } from '../shared/models/photo';
 import { DbStoreService } from './db-store.service';
 
@@ -40,6 +39,10 @@ export class PhotosStoreService {
     return this.state;
   }
 
+  setState(state: Photo[]) {
+    this.saveState.next(state);
+  }
+
   emptyPhotos() {
     this.updatePhotos.next([]);
     this.page = 0;
@@ -69,13 +72,21 @@ export class PhotosStoreService {
   addToFavorite(photo: Photo) {
     const updated = this.updateFavoriteStatus(photo, true);
     this.updatePhotos.next(updated);
-    this.saveState.next(updated.filter((p) => p.favorite));
+    const filterPhotos = updated.filter((p) => p.favorite);
+
+    // Update states
+    this.saveState.next(filterPhotos);
+    sessionStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }
 
   removeFromFavorite(photo: Photo) {
     const state = this.saveState.getValue().slice(0);
     (state.find((el) => el.id === photo.id) as Photo).favorite = false;
-    this.saveState.next(state.filter((p) => p.favorite));
+    const filterPhotos = state.filter((p) => p.favorite);
+
+    // Update states
+    this.saveState.next(filterPhotos);
+    sessionStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }
 
   loadPhotos() {

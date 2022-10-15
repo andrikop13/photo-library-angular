@@ -5,20 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './@theme/components/header/header.component';
-import { MainLibraryModule } from './main-library/main-library.module';
-import { FavoritesModule } from './favorites/favorites.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from './shared/shared.module';
+import { FavoritesListComponent } from './favorites/favorites-list/favorites-list.component';
+import { PhotosListComponent } from './main-library/photos-list/photos-list.component';
+import { PhotoInfoComponent } from './favorites/photo-info/photo-info.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FavoritesListComponent,
+    PhotosListComponent,
+    PhotoInfoComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MainLibraryModule,
-    FavoritesModule,
     HttpClientModule,
     SharedModule,
   ],

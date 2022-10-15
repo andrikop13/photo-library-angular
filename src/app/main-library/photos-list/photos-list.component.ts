@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { first, Subscription } from 'rxjs';
-import { fadeAnimation } from 'src/app/@theme/animations';
 import { PhotosStoreService } from 'src/app/store/photos-store.service';
 import { Photo } from '../../shared/models/photo';
 

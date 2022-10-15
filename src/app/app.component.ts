@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeAnimation } from './@theme/animations';
+import { Photo } from './shared/models/photo';
+import { PhotosStoreService } from './store/photos-store.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +27,17 @@ import { fadeAnimation } from './@theme/animations';
   ],
   animations: [fadeAnimation],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'photo-library-angular';
+
+  constructor(private photoStore: PhotosStoreService) {}
+
+  ngOnInit(): void {
+    this.checkForStorage();
+  }
+
+  checkForStorage() {
+    const favorites = JSON.parse(sessionStorage.getItem('favorites') as string);
+    this.photoStore.setState(favorites as Photo[]);
+  }
 }

@@ -1,20 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppResolver } from './app.resolver';
+import { FavoritesListComponent } from './favorites/favorites-list/favorites-list.component';
+import { PhotoInfoComponent } from './favorites/photo-info/photo-info.component';
+import { PhotosListComponent } from './main-library/photos-list/photos-list.component';
+import { PhotosResolver } from './main-library/photos.resolver';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./main-library/main-library.module').then(
-        (m) => m.MainLibraryModule
-      ),
+    component: PhotosListComponent,
+    resolve: {
+      data: PhotosResolver,
+    },
   },
   {
     path: 'favorites',
-    loadChildren: () =>
-      import('./favorites/favorites.module').then((m) => m.FavoritesModule),
+    component: FavoritesListComponent,
+  },
+  {
+    path: 'photos/:id',
+    component: PhotoInfoComponent,
   },
   {
     path: '**',
