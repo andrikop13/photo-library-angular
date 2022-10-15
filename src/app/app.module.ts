@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './@theme/components/header/header.component';
 import { MainLibraryModule } from './main-library/main-library.module';
-import { SharedModuleModule } from './shared/shared.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,10 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     MainLibraryModule,
-    SharedModuleModule,
     FavoritesModule,
-    MainLibraryModule,
     HttpClientModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

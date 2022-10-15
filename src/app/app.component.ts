@@ -22,6 +22,8 @@ import { fadeAnimation } from './@theme/animations';
         display: flex;
         justify-content: center;
         max-height: 75vh;
+
+        overflow-y: scroll;
       }
     `,
   ],

@@ -7,7 +7,7 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Photo } from '../shared/photo';
+import { Photo } from '../shared/models/photo';
 import { PhotosStoreService } from '../store/photos-store.service';
 
 @Injectable({
@@ -20,8 +20,7 @@ export class PhotosResolver implements Resolve<boolean> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return !this.photoStore.getClone().length
-      ? this.photoStore.loadPhotos()
-      : of([]);
+    const currentData = this.photoStore.getClone();
+    return !currentData.length ? this.photoStore.loadPhotos() : of(currentData);
   }
 }

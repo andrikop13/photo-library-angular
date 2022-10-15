@@ -1,0 +1,10 @@
+<infinite-scroll (scrolled)="onScroll()" [hasMore]="hasMore">
+  <app-animate-list class="library" [library]="library">
+    <ng-container *ngFor="let photo of library; trackBy: trackByFn">
+      <app-single-item
+        [photo]="photo"
+        (addFavorite)="addToFavorite(photo)"
+      ></app-single-item>
+    </ng-container>
+  </app-animate-list>
+</infinite-scroll>

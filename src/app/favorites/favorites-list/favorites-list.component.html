@@ -1,1 +1,5 @@
-<p>favorites-list works!</p>
+<app-animate-list class="library" [library]="favorites$ | async">
+  <ng-container *ngFor="let photo of favorites$ | async">
+    <app-single-item [photo]="photo"></app-single-item>
+  </ng-container>
+</app-animate-list>
