@@ -20,6 +20,13 @@ export class DbStoreService {
 
   load() {
     return this.http.get<Photo[]>(this.PICSUM_URL).pipe(
+      map((photos) =>
+        photos.map((p) => {
+          return {
+            id: p.id,
+          };
+        })
+      ),
       tap((photos: Photo[]) => {
         const photosLimit = photos.slice(0, this.filterPhotosNum + 1);
         this.fillDB.next(photosLimit);
@@ -36,7 +43,7 @@ export class DbStoreService {
 
     return this.EmulatePhotosDB$.pipe(
       map((photos) => photos.slice(lower, upper)),
-      delay(Math.random() * (500 - 300) + 300)
+      delay(Math.random() * (500 - 300) + 300) // Emulate real time API delay
     );
   }
 

@@ -14,9 +14,9 @@ import { Photo } from '../models/photo';
       .heart {
         display: inline-block;
         color: red;
-        font-size: 22px;
+        font-size: 24px;
         margin-left: 1rem;
-        padding: 0.4rem;
+        padding: 0.25rem;
       }
     `,
   ],
