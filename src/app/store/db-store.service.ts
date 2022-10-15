@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  delay,
+  map,
+  Observable,
+  of,
+  tap,
+} from 'rxjs';
 import { CONFIG } from '../../config';
 import { Photo } from '../shared/models/photo';
 
@@ -9,7 +17,6 @@ import { Photo } from '../shared/models/photo';
 })
 export class DbStoreService {
   private limit: number = 10;
-
   private fillDB = new BehaviorSubject<Photo[]>([]);
   private EmulatePhotosDB$: Observable<Photo[]> = this.fillDB.asObservable();
 
@@ -22,6 +29,7 @@ export class DbStoreService {
       map((photos) =>
         photos.map((p) => {
           return {
+            author: p.author,
             id: p.id,
           };
         })
@@ -30,14 +38,14 @@ export class DbStoreService {
         const photosLimit = photos.slice(0, CONFIG.filterPhotosNum + 1);
         this.fillDB.next(photosLimit);
         this.totalPhotos = CONFIG.filterPhotosNum;
-      })
+      }),
+      catchError(() => of([]))
     );
   }
 
   getRange(page: number, limit = this.limit) {
     const lower = page * limit;
     let upper = (page + 1) * limit;
-
     if (upper > this.totalPhotos - 1) upper = this.totalPhotos;
 
     return this.EmulatePhotosDB$.pipe(

@@ -13,6 +13,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
   hasMore: boolean = false;
   routeSubscription!: Subscription;
   storeSubscription!: Subscription;
+  errorMessage: string = 'Loading...';
 
   trackByFn(_: any, { id }: Photo): number {
     return id;
@@ -33,6 +34,7 @@ export class PhotosListComponent implements OnInit, OnDestroy {
     this.storeSubscription = this.photoStore.loadNext().subscribe((photos) => {
       this.library.push(...photos);
       this.hasMore = !(this.library.length === this.photoStore.totalPhotos);
+      if (!this.library.length) this.errorMessage = 'Library is empty!';
     });
   }
 

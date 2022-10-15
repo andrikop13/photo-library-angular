@@ -6,5 +6,9 @@
         (addFavorite)="addToFavorite(photo)"
       ></app-single-item>
     </ng-container>
+
+    <div *ngIf="!library.length" style="margin-top: 7rem">
+      <h1 style="font-weight: 500">{{ errorMessage }}</h1>
+    </div>
   </app-animate-list>
 </infinite-scroll>
