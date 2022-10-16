@@ -74,7 +74,7 @@ export class PhotosStoreService {
     this.updatePhotos.next(updated);
     const filterPhotos = updated.filter((p) => p.favorite);
 
-    // Update states
+    // Update state
     this.saveState.next(filterPhotos);
     localStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }
@@ -84,7 +84,7 @@ export class PhotosStoreService {
     (state.find((el) => el.id === photo.id) as Photo).favorite = false;
     const filterPhotos = state.filter((p) => p.favorite);
 
-    // Update states
+    // Update state
     this.saveState.next(filterPhotos);
     localStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }

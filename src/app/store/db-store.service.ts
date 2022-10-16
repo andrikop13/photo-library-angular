@@ -16,7 +16,7 @@ import { Photo } from '../shared/models/photo';
   providedIn: 'root',
 })
 export class DbStoreService {
-  private limit: number = 10;
+  private limit: number = CONFIG.photosPerPage;
   private fillDB = new BehaviorSubject<Photo[]>([]);
   private EmulatePhotosDB$: Observable<Photo[]> = this.fillDB.asObservable();
 
@@ -50,8 +50,12 @@ export class DbStoreService {
 
     return this.EmulatePhotosDB$.pipe(
       map((photos) => photos.slice(lower, upper)),
-      delay(Math.random() * (200 - 300) + 200) // Emulate real time API delay
+      delay(this.randomResTime(200, 300)) // Emulate real time API delay
     );
+  }
+
+  randomResTime(min: number, max: number): number {
+    return Math.random() * (min - max) + min;
   }
 
   isEmpty() {
