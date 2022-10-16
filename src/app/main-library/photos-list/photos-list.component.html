@@ -1,4 +1,8 @@
-<infinite-scroll (scrolled)="onScroll()" [hasMore]="hasMore">
+<infinite-scroll
+  (scrolled)="onScroll()"
+  [loading]="loading"
+  [hasMore]="hasMore"
+>
   <app-animate-list class="library" [library]="library">
     <ng-container *ngFor="let photo of library; trackBy: trackByFn">
       <app-single-item

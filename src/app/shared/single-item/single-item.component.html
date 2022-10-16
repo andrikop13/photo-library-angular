@@ -4,6 +4,7 @@
     <button mat-button *ngIf="!photo.favorite" (click)="addToFavorite(photo)">
       Add to favorites &hearts;
     </button>
+
     <span *ngIf="photo.favorite"
       ><div class="heart">&hearts;</div>
       <ng-content></ng-content

@@ -17,7 +17,7 @@ import { PhotosStoreService } from './store/photos-store.service';
     `
       .main-body {
         width: 90%;
-        margin: 2% 5%;
+        margin: 3.5% 5%;
         display: flex;
         justify-content: center;
         max-height: 75vh;

@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  ContentChild,
   ElementRef,
   EventEmitter,
   Input,
@@ -11,6 +10,14 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  fromEvent,
+  map,
+  Subscription,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'infinite-scroll',
@@ -18,9 +25,9 @@ import {
     <div
       class="spinnerContainer"
       #anchor
-      [ngStyle]="{ height: hasMore ? '50vh' : '0vh' }"
+      [ngStyle]="{ height: hasMore ? '50vh' : '2vh' }"
     >
-      <mat-spinner class="anchorObserve" *ngIf="hasMore"></mat-spinner>
+      <mat-spinner class="anchorObserve" *ngIf="loading"></mat-spinner>
     </div> `,
   styles: [
     `
@@ -33,50 +40,47 @@ import {
   ],
 })
 export class InfiniteScrollingComponent implements OnInit, OnDestroy {
-  @Input() options = {};
-
   @Input()
-  hasMore!: boolean;
-
+  loading!: boolean;
+  @Input() hasMore!: boolean;
   @Output() scrolled = new EventEmitter();
-
   @ViewChild('anchor', { static: true })
   anchor!: ElementRef;
 
   totalElements: number = 0;
+  scrollSubscription!: Subscription;
 
-  private observer!: IntersectionObserver;
-
-  constructor(
-    private host: ElementRef,
-    private changeDetector: ChangeDetectorRef
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     const options = {
-      root: document.querySelector('.main-body'),
-      thresold: 0.5,
+      thresold: 0.9,
     };
 
-    this.observer = new IntersectionObserver(([entry]) => {
-      entry.isIntersecting && this.scrolled.emit();
-    }, options);
+    const mainBody = document.querySelector('.main-body');
+    const scrollEvent = fromEvent(mainBody as Element, 'scroll');
 
-    this.hasMore && this.observer.observe(this.anchor.nativeElement);
-  }
+    this.scrollSubscription = scrollEvent
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        tap(() => {
+          const ch = mainBody!.clientHeight;
+          const st = mainBody!.scrollTop;
+          const sh = mainBody!.scrollHeight;
+          const ratio = (ch + st) / sh;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    changes['hasMore']?.currentValue &&
-      this.observer.observe(this.anchor.nativeElement);
-  }
-
-  get element() {
-    return this.host.nativeElement;
+          if (ratio > options.thresold) {
+            this.scrolled.emit();
+          }
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.observer.disconnect();
+    this.scrollSubscription.unsubscribe();
   }
 }

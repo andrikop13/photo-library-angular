@@ -7,13 +7,21 @@ import { Photo } from '../../shared/models/photo';
 @Component({
   selector: 'app-photos-list',
   templateUrl: './photos-list.component.html',
+  styles: [
+    `
+      .library {
+        margin-bottom: 3rem;
+      }
+    `,
+  ],
 })
 export class PhotosListComponent implements OnInit, OnDestroy {
   library: Photo[] = [];
   hasMore: boolean = false;
+  loading: boolean = true;
+  errorMessage: string = 'Loading...';
   routeSubscription!: Subscription;
   storeSubscription!: Subscription;
-  errorMessage: string = 'Loading...';
 
   trackByFn(_: any, { id }: Photo): number {
     return id;
@@ -33,12 +41,14 @@ export class PhotosListComponent implements OnInit, OnDestroy {
   getNext() {
     this.storeSubscription = this.photoStore.loadNext().subscribe((photos) => {
       this.library.push(...photos);
-      this.hasMore = !(this.library.length === this.photoStore.totalPhotos);
+      this.hasMore = this.library.length < this.photoStore.totalPhotos;
+      this.loading = false;
       if (!this.library.length) this.errorMessage = 'Library is empty!';
     });
   }
 
   onScroll() {
+    this.loading = true;
     this.getNext();
   }
 

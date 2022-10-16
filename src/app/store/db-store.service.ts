@@ -50,7 +50,7 @@ export class DbStoreService {
 
     return this.EmulatePhotosDB$.pipe(
       map((photos) => photos.slice(lower, upper)),
-      delay(Math.random() * (500 - 300) + 300) // Emulate real time API delay
+      delay(Math.random() * (200 - 300) + 200) // Emulate real time API delay
     );
   }
 

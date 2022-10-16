@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-not-found',
   template: `<div class="notFoundContainer">
     <h1>Page Not Found</h1>
-    <h2>We couldn't find that page! Not even with x-ray vision.</h2>
+    <h2>We couldn't find that page. Please try again!</h2>
   </div>`,
   styles: [
     `
