@@ -8,6 +8,7 @@ export const PHOTOS: any = [
     author: 'Alejandro Escamilla',
     author_url: 'https://unsplash.com/photos/yC-Yzbqy7PY',
     post_url: 'https://unsplash.com/photos/yC-Yzbqy7PY',
+    favorite: true,
   },
   {
     format: 'jpeg',

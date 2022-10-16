@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   }
 
   checkForStorage() {
-    const favorites = JSON.parse(sessionStorage.getItem('favorites') as string);
+    const favorites = JSON.parse(localStorage.getItem('favorites') as string);
     if (favorites.length) this.photoStore.setState(favorites as Photo[]);
   }
 }

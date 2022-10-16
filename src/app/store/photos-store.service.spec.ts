@@ -56,7 +56,7 @@ describe('PhotosStoreService', () => {
     const updatedPhotos = photoService.getFavoriteStatus(PHOTOS);
 
     expect(updatedPhotos[0].favorite).toBe(
-      FAVORITES[0].favorite,
+      true,
       'Favorite status not updated after refresh'
     );
   });

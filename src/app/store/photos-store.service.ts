@@ -35,7 +35,7 @@ export class PhotosStoreService {
     return photos.slice(0);
   }
 
-  getState() {
+  getState(): Observable<Photo[]> {
     return this.state;
   }
 
@@ -76,7 +76,7 @@ export class PhotosStoreService {
 
     // Update states
     this.saveState.next(filterPhotos);
-    sessionStorage.setItem('favorites', JSON.stringify(filterPhotos));
+    localStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }
 
   removeFromFavorite(photo: Photo) {
@@ -86,7 +86,7 @@ export class PhotosStoreService {
 
     // Update states
     this.saveState.next(filterPhotos);
-    sessionStorage.setItem('favorites', JSON.stringify(filterPhotos));
+    localStorage.setItem('favorites', JSON.stringify(filterPhotos));
   }
 
   loadPhotos() {
